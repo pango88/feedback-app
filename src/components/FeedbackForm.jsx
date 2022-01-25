@@ -1,21 +1,24 @@
-import { useState } from 'react';
-import Card from './shared/Card';
-import Button from './shared/Button';
-import RatingSelect from './RatingSelect';
+import { useState, useContext } from "react";
+import Card from "./shared/Card";
+import Button from "./shared/Button";
+import RatingSelect from "./RatingSelect";
+import FeedbackContext from "../context/FeedbackContext";
 
-function FeedbackForm({ handleAdd }) {
-  const [text, setText] = useState('');
+function FeedbackForm() {
+  const [text, setText] = useState("");
   const [rating, setRating] = useState(10);
   const [btnDisabled, setBtnDisabled] = useState(true);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
+
+  const { addFeedback } = useContext(FeedbackContext);
 
   const handleTextChange = (e) => {
-    if (text === '') {
+    if (text === "") {
       setBtnDisabled(true);
       setMessage(null);
-    } else if (text !== '' && text.trim().length <= 10) {
+    } else if (text !== "" && text.trim().length <= 10) {
       setBtnDisabled(true);
-      setMessage('Text must be atleast 10 characters');
+      setMessage("Text must be atleast 10 characters");
     } else {
       setBtnDisabled(false);
       setMessage(null);
@@ -30,9 +33,9 @@ function FeedbackForm({ handleAdd }) {
         text,
         rating,
       };
-      handleAdd(newFeedback);
+      addFeedback(newFeedback);
 
-      setText('');
+      setText("");
     }
   };
 
